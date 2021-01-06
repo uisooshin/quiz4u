@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>This is a TEST</title>
+    </head>
+    <body>
+        <p>Hi there!</p>
+        <p>It works!</p>
+
+<div id="spinner"
+    style="
+        background: #4267b2;
+        border-radius: 5px;
+        color: white;
+        height: 40px;
+        text-align: center;
+        width: 250px;">
+    Loading
+    <div
+    class="fb-login-button"
+    data-max-rows="1"
+    data-size="large"
+    data-button-type="continue_with"
+    data-use-continue-as="true"
+    ></div>
+</div>
+
+
+
+
+<!-- facebook Graph API TEST Start -->
+<script>
+var finished_rendering = function() {
+  console.log("finished rendering plugins");
+  var spinner = document.getElementById("spinner");
+  spinner.removeAttribute("style");
+  spinner.removeChild(spinner.childNodes[0]);
+}
+
+  function statusChangeCallback(response){
+	  FB.getLoginStatus(function(response) {
+	  if (response.status === 'connected') {
+      // The user is logged in and has authenticated your
+	  // app, and response.authResponse supplies
+	  // the user's ID, a valid access token, a signed
+	  // request, and the time the access token
+	  // and signed request each expire.
+	  var uid = response.authResponse.userID;
+	  var accessToken = response.authResponse.accessToken;
+	 
+      console.log(response)
+
+
+      } else if (response.status === 'not_authorized') {
+      // The user hasn't authorized your application.  They
+      // must click the Login button, or you must call FB.login
+      // in response to a user gesture, to launch a login dialog.
+
+
+
+      } else {
+      // The user isn't logged in to Facebook. You can launch a
+      // login dialog with a user gesture, but the user may have
+      // to log in to Facebook before authorizing your application.
+		alert("User is Not logged in to Facebook");
+      }
+     });
+  }
+
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '852819958839092',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v9.0'
+    });
+
+    FB.AppEvents.logPageView();
+    console.log("FB.init() is called");
+
+
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+
+
+    FB.Event.subscribe('xfbml.render', finished_rendering);
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+</script>
+
+
+
+
+<!-- facebook Graph API TEST End -->
+
+
+    </body>
+</html>
